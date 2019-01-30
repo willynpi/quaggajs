@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- <script src="quagga.min.js"></script>  -->
+  <script src="quagga.min.js"></script> 
 </head>
 <body>
     <h1>QuaggaJS Demo</h1>
@@ -10,16 +10,23 @@
     </div>
 </body>
 <script>
-var constraints = { audio: true, video: { width: 1280, height: 720 } }; 
-
-navigator.mediaDevices.getUserMedia(constraints)
-.then(function(mediaStream) {
-  var video = document.querySelector('video');
-  video.srcObject = mediaStream;
-  video.onloadedmetadata = function(e) {
-    video.play();
-  };
-})
-.catch(function(err) { document.querySelector('h1').textContent = err.name + ": " + err.message });
+    h1=document.querySelector('h1');
+Quagga.init({
+    inputStream : {
+      name : "Live",
+      type : "LiveStream",
+      target: document.querySelector('#myStream')    // Or '#yourElement' (optional)
+    },
+    decoder : {
+      readers : ["code_39_reader"]
+    }
+  }, function(err) {
+      if (err) {
+          h1.textContent = err;
+          return
+      }
+      h1.textContent = "Initialization finished. Ready to start";
+      Quagga.start();
+  });
 </script>
 </html>
