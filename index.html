@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <script src="quaggaJS/dist/quagga.min.js"></script>
+    <script src="quagga.min.js"></script>
 </head>
 <body>
     <h1>QuaggaJS Demo</h1>
@@ -10,7 +10,7 @@
     </div>
 </body>
 <script>
-$(function() {
+(function() {
     var App = {
         init : function() {
             Quagga.init(this.state, function(err) {
