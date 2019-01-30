@@ -8,7 +8,7 @@
     <h1>QuaggaJS Demo</h1>
     <h2></h2>
     <div id="interactive" class="viewport">
-        <video id="myStream" autoplay="true" preload="true" src=""></video>
+        <video autoplay="true" preload="true" src=""></video>
     </div>
 </body>
 <script>
@@ -21,7 +21,6 @@
             constraints: {
                 facingMode: "environment"
             },
-            target: document.querySelector('#myStream')    // Or '#yourElement' (optional)
         },
         decoder : {
             readers : ["code_39_reader"]
