@@ -15,6 +15,7 @@
 <script>
     h1=document.querySelector('h1');
     h2=document.querySelector('h2');
+    h1.textContent = document.querySelector('video').height + ' ' + document.querySelector('video').width;
     Quagga.init({
         inputStream : {
             name : "Live",
@@ -35,14 +36,14 @@
             h1.textContent = err;
             return
         }
-        h1.textContent = "Initialization finished. Ready to start";
+        // h1.textContent = "Initialization finished. Ready to start";
         Quagga.start();
     });
 
     Quagga.onProcessed(function(result) {
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
-
+        h2.textContent = drawingCanvas.getAttribute("width") + ' ' + drawingCanvas.getAttribute("height");
         if (result) {
             if (result.boxes) {
                 drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
