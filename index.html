@@ -5,8 +5,11 @@
   <script src="https://serratus.github.io/quaggaJS/javascripts/scale.fix.js"></script> 
   <style>
     .drawingBuffer {
-      position: absolute;
-      left: 0px;
+        transform: translate(0, -100%);
+    }
+    .viewport {
+        width: 100vw;
+        height: 100vh;
     }
   </style>
 </head>
@@ -42,25 +45,10 @@ $(function(){
                 facingMode: "environment" //後鏡
             },
             numOfWorkers: navigator.hardwareConcurrency,
-            /*area: {
-                top: "0%",
-                right: '0%',
-                left: '0%',
-                bottom: '0%'
-            }*/
         },
         locate: true,
         locator: {
-            //halfSample: true,
             patchSize: 'medium',
-            debug: {
-                drawBoundingBox: true,
-                showFrequency: true,
-                drawScanline: true,
-                showPattern: true,
-                showLabels: true,
-
-            }
         },
         decoder: {
             readers : ["code_39_reader"]
@@ -73,9 +61,10 @@ $(function(){
     });
 
     Quagga.onProcessed(function(result) {
+navigator.mediaDevices.getSupportedConstraints()
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
-      console.log(drawingCanvas);
+      
         if (result) {
             if(result.boxes){
               drawingCtx.clearRect(0,0,parseInt(drawingCanvas.getAttribute('width')),parseInt(drawingCanvas.getAttribute('height')));
@@ -93,7 +82,7 @@ $(function(){
 
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
-        h1.text(code);
+        alert(code);
     });
 
     $('#btn-scanner-start').click(function(e){
