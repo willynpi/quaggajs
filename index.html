@@ -30,17 +30,17 @@ $(function(){
             name : "Live",
             type : "LiveStream",
             constraints: {
-                width: {min: 640},
+                width: {min: 640}, 
                 height: {min: 480},
-                aspectRatio: {min: 1, max: 100},
-                facingMode: "environment"
+                aspectRatio: {min: 1, max: 100}, //長寬比
+                facingMode: "environment" //後鏡
             },
             numOfWorkers: navigator.hardwareConcurrency,
         },
         locate: true,
         // frequency: 10,
         decoder : {
-            readers : ["code_39_reader"]
+            readers : ["code_39_reader","code_39_vin_reader"]
         },
     }, function(err) {
         if(err) {
