@@ -8,7 +8,7 @@
   <h1>QuaggaJS Demo</h1>
     <h2></h2>
     <button id="btn-scanner-start">Scan</button>
-   <div id="interactive" class="viewport">
+   <div id="interactive" class="viewport" style="display:none;">
     </div> 
 </body>
 
@@ -68,18 +68,18 @@ $(function(){
             // }
 
             if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+                Quagga.ImageDebug.drawPath(result.line, {x: 1, y: 1}, drawingCtx, {color: 'red', lineWidth: 3});
             }
         }
     });
 
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
-        alert(code);
+        // alert(code);
         h1.text(code);
         // retrieveAsset(code);
         // $('#interactive').css('display','none');
-        Quagga.offProcessed();
+        // Quagga.offProcessed();
         // onStream = !onStream;
     });
 
@@ -100,28 +100,14 @@ $(function(){
 
 
     $('#btn-scanner-start').click(function(e){
-        $('#asset-panel').css('display', 'none');
-        alert(e.target)
-        if(!onStream) {
-            $('#interactive').css('display','block')
-                               .css('height', screenHeight)
-                               .css('width',screenWidth);
-            Quagga.start();
-            e.target.html('Stop')
-                     .toggleClass('btn-outline-primary')
-                     .toggleClass('btn-outline-danger');
-
-        } else {
-            $('#interactive').css('display','none');
-            // Quagga.stop();
-            e.target.html('Scan')
-                     .toggleClass('btn-outline-primary')
-                     .toggleClass('btn-outline-danger');
-
-        }
-        onStream = !onStream;
+        startScan();
     });
 
+    function startScan(){
+        Quagga.start();
+        $('#interactive').css('display','none');
+        alert('Start scan!')
+    }
 });
 </script> 
 </html>
