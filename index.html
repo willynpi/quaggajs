@@ -36,17 +36,17 @@ $(function(){
                 facingMode: "environment" //後鏡
             },
             numOfWorkers: navigator.hardwareConcurrency,
-            area: {
+            /*area: {
                 top: "0%",
                 right: '0%',
                 left: '0%',
                 bottom: '0%'
-            }
+            }*/
         },
         locate: true,
         locator: {
-            halfSample: true,
-            patchSize: 'large',
+            //halfSample: true,
+            patchSize: 'medium',
             debug: {
                 drawBoundingBox: true,
                 showFrequency: true,
@@ -69,8 +69,9 @@ $(function(){
     Quagga.onProcessed(function(result) {
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
-    
+      console.log(drawingCtx);
         if (result) {
+          
             if (result.codeResult && result.codeResult.code) {
                 Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
             }
