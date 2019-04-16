@@ -38,66 +38,36 @@ $(function(){
             numOfWorkers: navigator.hardwareConcurrency,
         },
         locate: true,
-        // frequency: 10,
         decoder : {
             readers : ["code_39_reader"]
         },
+        debug: {
+            drawBoundingBox: true,
+            showFrequency: true,
+            drawScanline: true,
+            showPattern: true
+        }
     }, function(err) {
         if(err) {
             alert(err);
-            // alert('Maybe your device does not support the technic. \n Pleas inform MIS for further info.');
         }
     });
 
     Quagga.onProcessed(function(result) {
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
+    
         if (result) {
-            
-            // if (result.boxes) {
-            //     drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-            //     result.boxes.filter(function (box) {
-            //         return box !== result.box;
-            //     }).forEach(function (box) {
-            //         Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
-            //     });
-            // }
-
-            // if (result.box) {
-            //     Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
-            // }
-
             if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {x: 1, y: 1}, drawingCtx, {color: 'red', lineWidth: 3});
+                Quagga.ImageDebug.drawPath(result.line, {x: 0, y: 0}, drawingCtx, {color: 'red', lineWidth: 3});
             }
         }
     });
 
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
-        // alert(code);
         h1.text(code);
-        // retrieveAsset(code);
-        // $('#interactive').css('display','none');
-        // Quagga.offProcessed();
-        // onStream = !onStream;
     });
-
-    // $.get('/api/inventory', function(res){
-    //     var res = JSON.parse(res);
-    //     res.forEach(function(item){
-    //         var iv = JSON.stringify({
-    //             "name": item.fields.name,
-    //             "keeper": item.fields.keeper,
-    //             "costcenter": item.fields.cost_center,
-    //             "storage": item.fields.storage_space,
-    //             "sapid": item.fields.sap_id,
-    //             "sapsubid": item.fields.sap_sub_id
-    //         });
-    //         localStorage.setItem(item.fields.barcode, iv);
-    //     });
-    // });
-
 
     $('#btn-scanner-start').click(function(e){
         startScan();
