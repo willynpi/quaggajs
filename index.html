@@ -34,32 +34,34 @@ $(function(){
     var screenWidth = window.innerWidth;
 
 
-    var init = Quagga.init({
-        inputStream : {
-            name : "Live",
-            type : "LiveStream",
-            constraints: {
-                width: {min: 640}, 
-                height: {min: 480},
-                aspectRatio: {min: 1, max: 2}, //長寬比
-                facingMode: "environment" //後鏡
+    var init = function() {
+        Quagga.init({
+            inputStream : {
+                name : "Live",
+                type : "LiveStream",
+                constraints: {
+                    width: {min: 640}, 
+                    height: {min: 480},
+                    aspectRatio: {min: 1, max: 2}, //長寬比
+                    facingMode: "environment" //後鏡
+                },
+                numOfWorkers: navigator.hardwareConcurrency,
             },
-            numOfWorkers: navigator.hardwareConcurrency,
-        },
-        locate: true,
-        locator: {
-            patchSize: 'medium',
-        },
-        decoder: {
-            readers : ["code_39_reader"]
-        },
+            locate: true,
+            locator: {
+                patchSize: 'medium',
+            },
+            decoder: {
+                readers : ["code_39_reader"]
+            },
 
-    }, function(err) {
-        if(err) {
-            alert(err);
-        }
-        Quagga.start();
-    });
+        }, function(err) {
+            if(err) {
+                alert(err);
+            }
+            Quagga.start();
+        });
+    }
 
     Quagga.onProcessed(function(result) {
         var drawingCtx = Quagga.canvas.ctx.overlay,
@@ -93,7 +95,7 @@ $(function(){
     });
 
     function startScan(){
-        init;
+        init();
         $('#interactive').css('display','block');
         alert('Start scan!')
     }
