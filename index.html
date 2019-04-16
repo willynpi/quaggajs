@@ -1,20 +1,30 @@
 <!doctype html>
 <html>
 <head>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="quagga.min.js"></script> 
-  <script src="https://serratus.github.io/quaggaJS/javascripts/scale.fix.js"></script>
+  <script src="https://serratus.github.io/quaggaJS/javascripts/scale.fix.js"></script> 
 </head>
 <body>
-    <h1>QuaggaJS Demo</h1>
+  <h1>QuaggaJS Demo</h1>
     <h2></h2>
-    <div id="interactive" class="viewport">
-        
-    </div>
+    <button id="btn-scanner-start">Scan</button>
+   <div id="interactive" class="viewport">
+    </div> 
 </body>
+
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
 <script>
-    h1=document.querySelector('h1');
-    h2=document.querySelector('h2');
+$(function(){
+    var h1 = $('h1');
+    var h2 = $('h2');
+    var onStream = false;
+    var screenHeight = window.innerHeight * 0.5;
+    var screenWidth = window.innerWidth;
+
+
     Quagga.init({
         inputStream : {
             name : "Live",
@@ -26,24 +36,23 @@
                 facingMode: "environment"
             },
         },
+        numOfWorkers: 2,
+        frequency: 10,
         decoder : {
             readers : ["code_39_reader"]
         },
-        locate: true
     }, function(err) {
-        if (err) {
-            h1.textContent = err;
-            return
+        if(err) {
+            alert(err);
+            // alert('Maybe your device does not support the technic. \n Pleas inform MIS for further info.');
         }
-        // h1.textContent = "Initialization finished. Ready to start";
-        Quagga.start();
     });
 
     Quagga.onProcessed(function(result) {
-        var drawingCtx = Quagga.canvas.ctx.overlay,
+       /* var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
-        h2.textContent = drawingCanvas.getAttribute("width") + ' ' + drawingCanvas.getAttribute("height");
         if (result) {
+            
             if (result.boxes) {
                 drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
                 result.boxes.filter(function (box) {
@@ -60,12 +69,57 @@
             if (result.codeResult && result.codeResult.code) {
                 Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
             }
-        }
+        }*/
     });
 
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
-        h2.textContent = code;
+        h1.text(code);
+        // retrieveAsset(code);
+        // $('#interactive').css('display','none');
+        // Quagga.offProcessed();
+        // onStream = !onStream;
     });
-</script>
+
+    // $.get('/api/inventory', function(res){
+    //     var res = JSON.parse(res);
+    //     res.forEach(function(item){
+    //         var iv = JSON.stringify({
+    //             "name": item.fields.name,
+    //             "keeper": item.fields.keeper,
+    //             "costcenter": item.fields.cost_center,
+    //             "storage": item.fields.storage_space,
+    //             "sapid": item.fields.sap_id,
+    //             "sapsubid": item.fields.sap_sub_id
+    //         });
+    //         localStorage.setItem(item.fields.barcode, iv);
+    //     });
+    // });
+
+
+    $('#btn-scanner-start').click(function(e){
+        $('#asset-panel').css('display', 'none');
+        alert(e.target)
+        if(!onStream) {
+            $('#interactive').css('display','block')
+                               .css('height', screenHeight)
+                               .css('width',screenWidth);
+            Quagga.start();
+            e.target.html('Stop')
+                     .toggleClass('btn-outline-primary')
+                     .toggleClass('btn-outline-danger');
+
+        } else {
+            $('#interactive').css('display','none');
+            // Quagga.stop();
+            e.target.html('Scan')
+                     .toggleClass('btn-outline-primary')
+                     .toggleClass('btn-outline-danger');
+
+        }
+        onStream = !onStream;
+    });
+
+});
+</script> 
 </html>
