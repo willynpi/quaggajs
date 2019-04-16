@@ -34,7 +34,7 @@ $(function(){
     var screenWidth = window.innerWidth;
 
 
-    Quagga.init({
+    var init = Quagga.init({
         inputStream : {
             name : "Live",
             type : "LiveStream",
@@ -58,10 +58,10 @@ $(function(){
         if(err) {
             alert(err);
         }
+        Quagga.start();
     });
 
     Quagga.onProcessed(function(result) {
-navigator.mediaDevices.getSupportedConstraints()
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
       
@@ -83,21 +83,17 @@ navigator.mediaDevices.getSupportedConstraints()
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
         alert(code);
+        Quagga.stop();
     });
-    
-    Quagga.offProcessed(function(){
-        alert('off process');
-    });
-    Quagga.offDeteced(function(){
-        alert('off detected');
-    });
+
+
 
     $('#btn-scanner-start').click(function(e){
         startScan();
     });
 
     function startScan(){
-        Quagga.start();
+        init;
         $('#interactive').css('display','block');
         alert('Start scan!')
     }
