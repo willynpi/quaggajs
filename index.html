@@ -85,6 +85,7 @@ $(function(){
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
         alert(code);
+        h1.text(code);
         Quagga.stop();
     });
 
