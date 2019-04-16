@@ -84,6 +84,13 @@ navigator.mediaDevices.getSupportedConstraints()
         var code = result.codeResult.code;
         alert(code);
     });
+    
+    Quagga.offProcessed(function(){
+        alert('off process');
+    });
+    Quagga.offDeteced(function(){
+        alert('off detected');
+    });
 
     $('#btn-scanner-start').click(function(e){
         startScan();
