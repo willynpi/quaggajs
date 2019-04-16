@@ -29,14 +29,14 @@ $(function(){
         inputStream : {
             name : "Live",
             type : "LiveStream",
-            constraints: {
-                width: {min: 640},
-                height: {min: 480},
-                aspectRatio: {min: 1, max: 100},
-                facingMode: "environment"
-            },
+            // constraints: {
+            //     width: {min: 640},
+            //     height: {min: 480},
+            //     aspectRatio: {min: 1, max: 100},
+            //     facingMode: "environment"
+            // },
         },
-        // numOfWorkers: 2,
+        numOfWorkers: navigator.hardwareConcurrency,
         // frequency: 10,
         decoder : {
             readers : ["code_39_reader"]
