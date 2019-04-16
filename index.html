@@ -74,10 +74,11 @@ $(function(){
 
     Quagga.onDetected(function(result) {
         var code = result.codeResult.code;
+        alert(code);
         h1.text(code);
         // retrieveAsset(code);
         // $('#interactive').css('display','none');
-        // Quagga.offProcessed();
+        Quagga.offProcessed();
         // onStream = !onStream;
     });
 
